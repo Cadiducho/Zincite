@@ -1,0 +1,28 @@
+plugins {
+    id "java"
+    id "io.freefair.lombok" version "4.0.0"
+    id "maven"
+}
+
+group 'com.cadiducho'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        url "https://cadiducho.com/repo/"
+    }
+}
+
+dependencies {
+    implementation group: 'com.cadiducho', name: 'TelegramBotAPI', version: '4.4'
+    implementation group: 'com.vdurmont', name: 'emoji-java', version: '5.0.0'
+
+    //Tests
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.1'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.5.1'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.1'
+}
