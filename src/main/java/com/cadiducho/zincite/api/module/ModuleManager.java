@@ -22,8 +22,7 @@ import java.util.jar.JarFile;
 public class ModuleManager {
     
     @Getter private final List<ZinciteModule> modules = new ArrayList<>();
-    
-    private final ZinciteBot server;
+
     @Getter private final File modulesFolder;
 
     /**

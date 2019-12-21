@@ -111,10 +111,10 @@ public class CommandManager {
         String callbackQueryDataName = callbackQuery.getData().split("#")[0];
         Optional<CallbackListenerMethodInstance> target = getCallbackListener(callbackQueryDataName);
         if (target.isPresent()) {
-            CallbackListenerMethodInstance instance = target.get();
+            CallbackListenerMethodInstance cblMethod = target.get();
             try {
                 log.info(" # Ejecutando callback listener para '" + callbackQuery.getData() + "'");
-                instance.method.invoke(instance.listenerInstance, callbackQuery);
+                cblMethod.method.invoke(cblMethod.listenerInstance, callbackQuery);
             } catch (InvocationTargetException invocationException) {
                 if (invocationException.getCause() instanceof TelegramException) { // los métodos de listener pueden lanzar TelegramException
                     log.severe("Error respondiendo a un CallbackQuery en la API de Telegram: ");
