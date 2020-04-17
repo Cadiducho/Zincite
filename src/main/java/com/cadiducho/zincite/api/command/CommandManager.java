@@ -2,16 +2,14 @@ package com.cadiducho.zincite.api.command;
 
 import com.cadiducho.telegrambotapi.*;
 import com.cadiducho.telegrambotapi.exception.TelegramException;
+import com.cadiducho.zincite.ZinciteBot;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Class to handle and add all his commands
@@ -22,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CommandManager {
 
+    private final ZinciteBot zincite;
     private final Map<String, BotCommand> commandMap = new HashMap<>();
     private final Map<String, CallbackListenerMethodInstance> callbackListenersMap = new HashMap<>();
 
@@ -82,7 +81,7 @@ public class CommandManager {
             return false;
         }
 
-        String sentLabel = rawcmd[0].toLowerCase().replace("@" + bot.getMe().getUsername(), "");
+        String sentLabel = rawcmd[0].toLowerCase().replace("@" + bot.getMe().getUsername().toLowerCase(), "");
         Optional<BotCommand> target = getCommand(sentLabel);
         if (!target.isPresent()) {
             // no encontrado por primer alias, buscar frase entera
@@ -124,6 +123,30 @@ public class CommandManager {
                 log.severe("Error accediendo a un CallbackListener: ");
                 log.severe(e.getMessage());
             }
+        }
+    }
+
+    public void registerCommandsToTelegramHelp() {
+        List<com.cadiducho.telegrambotapi.BotCommand> telegramCommandList = new ArrayList<>();
+        for (Map.Entry<String, BotCommand> entry : commandMap.entrySet()) {
+            String label = entry.getKey();
+            BotCommand cmd = entry.getValue();
+
+            com.cadiducho.telegrambotapi.BotCommand telegramCommand = new com.cadiducho.telegrambotapi.BotCommand();
+            telegramCommand.setCommand(label);
+            String description = cmd.getDescription();
+            if (description.length() < 4) {
+                description = "Comando sin descripción";
+                log.warning("El comando /" + label + " no tiene descripción.");
+            }
+            telegramCommand.setDescription(description);
+            telegramCommandList.add(telegramCommand);
+        }
+        try {
+            zincite.getTelegramBot().setMyCommands(telegramCommandList);
+        } catch (TelegramException e) {
+            log.warning("Se ha intentado registrar la lista de comandos a la ayuda de las apps de Telegram pero ha ocurrido un error: ");
+            log.warning(e.getMessage());
         }
     }
 

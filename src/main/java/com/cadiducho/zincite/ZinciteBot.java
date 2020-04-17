@@ -67,7 +67,7 @@ public class ZinciteBot {
         }
 
         this.moduleManager = new ModuleManager(new File("modules"));
-        this.commandManager = new CommandManager();
+        this.commandManager = new CommandManager(instance);
 
         this.telegramBot = new TelegramBot(token);
         this.ownerId = ownerId;
@@ -97,6 +97,7 @@ public class ZinciteBot {
         telegramBot.getUpdatesPoller().setExceptionHandler(exceptionHandler);
 
         telegramBot.startUpdatesPoller();
+        commandManager.registerCommandsToTelegramHelp();
 
         log.info("Zincite bot v" + this.version + " iniciado completamente");
     }
