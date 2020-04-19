@@ -74,6 +74,13 @@ public interface BotCommand {
         return this.getClass().getAnnotation(CommandInfo.class).description();
     }
 
+    default boolean isHidden() {
+        if (!this.getClass().isAnnotationPresent(CommandInfo.class)) {
+            return false;
+        }
+        return this.getClass().getAnnotation(CommandInfo.class).hidden();
+    }
+
     default String getUsage() {
         StringBuilder stringBuilder = new StringBuilder();
 

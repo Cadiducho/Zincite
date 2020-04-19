@@ -35,4 +35,10 @@ public @interface CommandInfo {
      * @return descripción deol comando
      */
     String description() default "";
+
+    /**
+     * Si un comando es oculto o no. Esto lo esconderá de la lista de ayudas y comandos públicos
+     * @return true si es hidden
+     */
+    boolean hidden() default false;
 }

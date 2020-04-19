@@ -131,6 +131,7 @@ public class CommandManager {
         for (Map.Entry<String, BotCommand> entry : commandMap.entrySet()) {
             String label = entry.getKey();
             BotCommand cmd = entry.getValue();
+            if (cmd.isHidden()) continue;
 
             com.cadiducho.telegrambotapi.BotCommand telegramCommand = new com.cadiducho.telegrambotapi.BotCommand();
             telegramCommand.setCommand(label);
