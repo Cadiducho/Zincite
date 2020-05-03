@@ -131,14 +131,15 @@ public class CommandManager {
         for (Map.Entry<String, BotCommand> entry : commandMap.entrySet()) {
             String label = entry.getKey();
             BotCommand cmd = entry.getValue();
-            if (cmd.isHidden()) continue;
+            if (cmd.isHidden()) continue; // Si el comando es oculto, no publicarlo en la lista
+            if (!cmd.getName().startsWith("/")) continue; // Si no comienza por / no va a ser reconocido por los clientes de telegram como un comando
 
             com.cadiducho.telegrambotapi.BotCommand telegramCommand = new com.cadiducho.telegrambotapi.BotCommand();
             telegramCommand.setCommand(label);
             String description = cmd.getDescription();
             if (description.length() < 4) {
                 description = "Comando sin descripción";
-                log.warning("El comando /" + label + " no tiene descripción.");
+                log.warning("El comando '" + label + "' no tiene descripción.");
             }
             telegramCommand.setDescription(description);
             telegramCommandList.add(telegramCommand);
