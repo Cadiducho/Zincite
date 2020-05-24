@@ -132,7 +132,8 @@ public class CommandManager {
             String label = entry.getKey();
             BotCommand cmd = entry.getValue();
             if (cmd.isHidden()) continue; // Si el comando es oculto, no publicarlo en la lista
-            if (!cmd.getName().startsWith("/")) continue; // Si no comienza por / no va a ser reconocido por los clientes de telegram como un comando
+            if (!label.startsWith("/") || !cmd.getName().startsWith("/")) continue; // Si no comienza por / no va a ser reconocido por los clientes de telegram como un comando
+            if (label.contains(" ")) continue;
 
             com.cadiducho.telegrambotapi.BotCommand telegramCommand = new com.cadiducho.telegrambotapi.BotCommand();
             telegramCommand.setCommand(label);

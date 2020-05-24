@@ -1,10 +1,10 @@
 package com.cadiducho.zincite;
 
-import com.cadiducho.zincite.api.command.CommandManager;
-import com.cadiducho.zincite.api.module.ZinciteModule;
-import com.cadiducho.zincite.api.module.ModuleManager;
 import com.cadiducho.telegrambotapi.TelegramBot;
 import com.cadiducho.telegrambotapi.handlers.ExceptionHandler;
+import com.cadiducho.zincite.api.command.CommandManager;
+import com.cadiducho.zincite.api.module.ModuleManager;
+import com.cadiducho.zincite.api.module.ZinciteModule;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.java.Log;
@@ -26,14 +26,24 @@ public class ZinciteBot {
     @Getter private final CommandManager commandManager;
 
     /**
+     * The Console manager
+     */
+    private final ConsoleManager consoleManager;
+
+    /**
+     * The telegram token
+     */
+    @Getter private final String token;
+
+    /**
      * The owner Telegram ID, if is set
      */
-    @Getter private Long ownerId;
+    @Getter private final Long ownerId;
 
     /**
      * The bot version, for log purposes mainly
      */
-    @Getter private String version;
+    @Getter private final String version;
 
     /**
      * Instance to handle exceptions on fetching Telegram API
@@ -54,24 +64,50 @@ public class ZinciteBot {
     /**
      * Create a ZinciteBot
      * @param token Telegram bot token
+     * @param ownerId Telegram ID of the owner
+     */
+    public ZinciteBot(String token, Long ownerId) {
+        this(token, ownerId, "1.0");
+    }
+
+    /**
+     * Create a ZinciteBot
+     * @param token Telegram bot token
      * @param ownerId Telegram owner's user id
      * @param version Version of the bot
      */
     public ZinciteBot(String token, Long ownerId, String version) {
+        this(token, ownerId, version, "logs", "modules");
+    }
+
+    /**
+     * Create a ZinciteBot
+     * @param token Telegram bot token
+     * @param ownerId Telegram owner's user id
+     * @param version Version of the bot
+     * @param logsPath Path where logs are stored
+     * @param modulesPath Path where modules are stored
+     */
+    public ZinciteBot(String token, Long ownerId, String version, String logsPath, String modulesPath) {
         instance = this;
+
+        this.token = token;
+        this.ownerId = ownerId;
+        this.version = version;
+
+        this.consoleManager = new ConsoleManager(instance);
+        this.consoleManager.startFile(logsPath + "/log-%D.txt");
         if (token == null) {
-            System.err.println("Token cannot be null");
+            log.warning("Token cannot be null");
         }
         if (version == null) {
-            System.err.println("Version cannot be null");
+            log.warning("Version cannot be null");
         }
 
-        this.moduleManager = new ModuleManager(new File("modules"));
+        this.moduleManager = new ModuleManager(new File(modulesPath));
         this.commandManager = new CommandManager(instance);
 
         this.telegramBot = new TelegramBot(token);
-        this.ownerId = ownerId;
-        this.version = version;
     }
 
     /**
@@ -79,6 +115,7 @@ public class ZinciteBot {
      * This includes load modules and start polling Telegram Bot API
      */
     public void startServer() {
+        consoleManager.startConsole();
         log.info("Servidor arrancado");
 
         try {
@@ -90,10 +127,6 @@ public class ZinciteBot {
 
         UpdatesHandler events = new UpdatesHandler(telegramBot, instance);
         telegramBot.getUpdatesPoller().setHandler(events);
-
-        if (exceptionHandler == null) {
-            this.exceptionHandler = new DefaultZinciteExceptionHandler(telegramBot, ownerId);
-        }
         telegramBot.getUpdatesPoller().setExceptionHandler(exceptionHandler);
 
         telegramBot.startUpdatesPoller();
