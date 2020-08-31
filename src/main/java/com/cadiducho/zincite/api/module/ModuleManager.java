@@ -1,6 +1,5 @@
 package com.cadiducho.zincite.api.module;
 
-import com.cadiducho.zincite.ZinciteBot;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
