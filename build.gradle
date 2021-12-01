@@ -1,12 +1,12 @@
 plugins {
     id "java"
     id "java-library"
-    id "io.freefair.lombok" version "5.1.1"
+    id "io.freefair.lombok" version "6.3.0"
     id "maven-publish"
 }
 
 group 'com.cadiducho'
-version '1.4.1'
+version '1.4.2'
 
 publishing {
     publications {
@@ -20,6 +20,10 @@ publishing {
     }
 }
 
+javadoc {
+    source = sourceSets.main.allJava
+}
+
 sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
@@ -31,14 +35,14 @@ repositories {
 }
 
 dependencies {
-    api group: 'com.cadiducho', name: 'TelegramBotAPI', version: '4.9'
+    api group: 'com.cadiducho', name: 'TelegramBotAPI', version: '5.2'
 
     //Tests
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.2'
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.6.2'
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.6.2'
-    testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.5.7'
-    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.5.7'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.8.2'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.8.2'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.8.2'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.12.4'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.12.4'
 }
 
 test {
