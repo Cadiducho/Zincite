@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'com.cadiducho', name: 'Zincite', version: '1.4.1'
+    implementation group: 'com.cadiducho', name: 'Zincite', version: '1.4.3'
 }
 ```
 ## Usage in Maven
@@ -24,11 +24,11 @@ dependencies {
 <dependency>
     <groupId>com.cadiducho</groupId>
     <artifactId>Zincite</artifactId>
-    <version>1.4.1</version>
+    <version>1.4.3</version>
 </dependency>
 ```
 
 ## License
 This project is released under the MIT-License.
 
-© 2020 Cadiducho
+© 2022 Cadiducho
