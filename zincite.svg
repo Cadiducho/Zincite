@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Generator: Adobe Illustrator 25.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1"
-	 id="Capa_1" inkscape:version="0.92.4 (5da689c313, 2019-01-14)" sodipodi:docname="gem.svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:svg="http://www.w3.org/2000/svg"
+	 id="Capa_1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:svg="http://www.w3.org/2000/svg"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512"
 	 style="enable-background:new 0 0 512 512;" xml:space="preserve">
 <style type="text/css">
@@ -11,21 +11,23 @@
 	.st3{fill:#D7742B;}
 	.st4{fill:#C74E16;}
 	.st5{fill:#C00F0F;}
+	.st6{font-family:'Lato-Regular';}
+	.st7{font-size:274.1915px;}
 </style>
 <sodipodi:namedview  bordercolor="#666666" borderopacity="1" gridtolerance="10" guidetolerance="10" id="namedview202" inkscape:current-layer="Capa_1" inkscape:cx="330.11078" inkscape:cy="275.62705" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-height="1017" inkscape:window-maximized="1" inkscape:window-width="1920" inkscape:window-x="-8" inkscape:window-y="-8" inkscape:zoom="1.3037281" objecttolerance="10" pagecolor="#ffffff" showgrid="true">
 	</sodipodi:namedview>
-<polygon id="polygon151" class="st0" points="326.4,157.4 326.4,354.6 438.2,381.8 438.2,130.2 "/>
+<polygon id="polygon151" class="st0" points="367.9,201.3 367.9,351.9 453.3,372.7 453.3,180.5 "/>
 <g id="g157">
-	<polygon id="polygon153" class="st1" points="346.4,177.4 438.2,130.2 256,0 236,132.9 	"/>
-	<polygon id="polygon155" class="st1" points="236,379.1 256,512 438.2,381.8 346.4,334.6 	"/>
+	<polygon id="polygon153" class="st1" points="383.2,216.5 453.3,180.5 314.1,81 298.8,182.5 	"/>
+	<polygon id="polygon155" class="st1" points="298.8,370.7 314.1,472.2 453.3,372.7 383.2,336.7 	"/>
 </g>
-<polygon id="polygon159" class="st2" points="256,112.8 236,256 256,399.2 346.4,334.6 346.4,177.4 "/>
-<polygon id="polygon161" class="st3" points="145.6,157.4 145.6,354.6 256,399.2 256,112.8 "/>
+<polygon id="polygon159" class="st2" points="314.1,167.2 298.8,276.6 314.1,386 383.2,336.7 383.2,216.5 "/>
+<polygon id="polygon161" class="st3" points="229.8,201.3 229.8,351.9 314.1,386 314.1,167.2 "/>
 <g id="g167">
-	<polygon id="polygon163" class="st4" points="165.6,334.6 114.6,331 73.8,381.8 256,512 256,399.2 	"/>
-	<polygon id="polygon165" class="st4" points="256,112.8 256,0 73.8,130.2 114.6,182.3 165.6,177.4 	"/>
+	<polygon id="polygon163" class="st4" points="245,336.7 206.1,333.9 174.9,372.7 314.1,472.2 314.1,386 	"/>
+	<polygon id="polygon165" class="st4" points="314.1,167.2 314.1,81 174.9,180.5 206.1,220.3 245,216.5 	"/>
 </g>
-<polygon id="polygon169" class="st5" points="165.6,177.4 73.8,130.2 73.8,381.8 165.6,334.6 "/>
+<polygon id="polygon169" class="st5" points="245,216.5 174.9,180.5 174.9,372.7 245,336.7 "/>
 <g id="g171">
 </g>
 <g id="g173">
@@ -56,5 +58,5 @@
 </g>
 <g id="g199">
 </g>
-<text transform="matrix(0.7772 0 0 1 666.4941 381.8002)" style="font-family:'Lato-Regular'; font-size:290.5313px;">Zincite</text>
+<text transform="matrix(0.7772 0 0 1 507.7959 372.7226)" class="st6 st7">Zincite</text>
 </svg>
