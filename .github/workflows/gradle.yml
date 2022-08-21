@@ -1,20 +1,55 @@
-name: Java CI
-
-on: [push]
+name: build
+on: ['push']
 
 jobs:
-  build:
-
+  Test:
+    name: "🔨 Test code"
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '1.8', '11.0.5' ]
+        jdk: [ '8', '17' ]
     steps:
-    - uses: actions/checkout@v1
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
-      with:
-        java-version: ${{ matrix.java }}
-        architecture: x64
-    - name: Build with Gradle
-      run: ./gradlew build
+      - name: Setup Java ${{ matrix.jdk }} JDK
+        uses: actions/setup-java@v3.2.0
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.jdk }}
+
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Validate Wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Setup and Run Gradle
+        run: ./gradlew test
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          MAVEN_NAME: ${{ secrets.MAVEN_NAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+
+  Publish:
+    if: github.ref == 'refs/heads/master'
+    needs:
+      - Test
+    name: "📄 Publish to maven repo"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.2.0
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Validate Wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Setup and Run Gradle
+        run: ./gradlew publishAllPublicationsToReleasesRepository
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          MAVEN_NAME: ${{ secrets.MAVEN_NAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}

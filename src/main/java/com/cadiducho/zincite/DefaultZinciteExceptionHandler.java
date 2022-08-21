@@ -43,7 +43,7 @@ public class DefaultZinciteExceptionHandler implements ExceptionHandler {
      */
     private void send(String msg) {
         try {
-            bot.sendMessage(ownerId, msg, ParseMode.HTML, null, null, null, null);
+            bot.sendMessage(ownerId, msg, ParseMode.HTML, null, null, null, null, null);
         } catch (TelegramException ignored) { }
     }
 }
