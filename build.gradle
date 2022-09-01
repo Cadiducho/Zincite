@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'com.cadiducho'
-version '1.5'
+version '1.5.1'
 
 java {
     withJavadocJar()
@@ -60,7 +60,7 @@ repositories {
 }
 
 dependencies {
-    api group: 'com.cadiducho', name: 'TelegramBotAPI', version: '6.2'
+    api group: 'com.cadiducho', name: 'TelegramBotAPI', version: '6.2.1'
 
     //Tests
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.9.0'

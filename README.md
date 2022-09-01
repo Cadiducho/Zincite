@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'com.cadiducho', name: 'Zincite', version: '1.5'
+    implementation group: 'com.cadiducho', name: 'Zincite', version: '1.5.1'
 }
 ```
 ## Usage in Maven
@@ -32,7 +32,7 @@ dependencies {
 <dependency>
     <groupId>com.cadiducho</groupId>
     <artifactId>Zincite</artifactId>
-    <version>1.5</version>
+    <version>1.5.1</version>
 </dependency>
 ```
 
