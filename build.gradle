@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'com.cadiducho'
-version '1.6'
+version '1.7'
 
 java {
     withJavadocJar()
@@ -60,12 +60,12 @@ repositories {
 }
 
 dependencies {
-    api group: 'com.cadiducho', name: 'TelegramBotAPI', version: '6.3'
+    api group: 'com.cadiducho', name: 'TelegramBotAPI', version: '6.5'
 
     //Tests
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.9.1'
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.9.1'
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.9.1'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.9.2'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.9.2'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.9.2'
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '4.8.1'
     testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '4.8.1'
 }
