@@ -20,31 +20,42 @@ public final class ConsoleManager {
 
     private boolean running = true;
 
-    public ConsoleManager(ZinciteBot server) {
+    public ConsoleManager(ZinciteBot server, boolean enableFileLog) {
         this.server = server;
 
-        for (Handler h : logger.getHandlers()) {
-            logger.removeHandler(h);
+        if (enableFileLog) {
+            for (Handler h : logger.getHandlers()) {
+                logger.removeHandler(h);
+            }
+
+            // add log handler which writes to console
+            logger.addHandler(new FancyConsoleHandler());
+
+            // set system output streams
+            System.setOut(new PrintStream(new LoggerOutputStream(Level.INFO), true));
+            System.setErr(new PrintStream(new LoggerOutputStream(Level.WARNING), true));
         }
-
-        // add log handler which writes to console
-        logger.addHandler(new FancyConsoleHandler());
-
-        // set system output streams
-        System.setOut(new PrintStream(new LoggerOutputStream(Level.INFO), true));
-        System.setErr(new PrintStream(new LoggerOutputStream(Level.WARNING), true));
     }
 
-    public void startConsole() {
-        for (Handler handler : logger.getHandlers()) {
-            if (handler.getClass() == FancyConsoleHandler.class) {
-                handler.setFormatter(new DateOutputFormatter(CONSOLE_DATE));
+    public void startConsole(boolean enableConsoleReader, boolean enableFileLog) {
+        if (enableFileLog) {
+            for (Handler handler : logger.getHandlers()) {
+                if (handler.getClass() == FancyConsoleHandler.class) {
+                    handler.setFormatter(new DateOutputFormatter(CONSOLE_DATE));
+                }
             }
         }
-        Thread thread = new ConsoleCommandThread();
-        thread.setName("ConsoleCommandThread");
-        thread.setDaemon(true);
-        thread.start();
+
+        if (enableConsoleReader) {
+            startConsoleReader();
+        }
+    }
+
+    private void startConsoleReader() {
+        ConsoleCommandThread consoleCommandThread = new ConsoleCommandThread();
+        consoleCommandThread.setName("ZinciteConsoleCommandThread");
+        consoleCommandThread.setDaemon(true);
+        consoleCommandThread.start();
     }
 
     public void startFile(String logfile) {
@@ -143,12 +154,12 @@ public final class ConsoleManager {
     private class ConsoleCommandThread extends Thread {
         @Override
         public void run() {
-            while (running) {
-                try {
-                    BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
-                    final String consoleCommand = buffer.readLine(); //No confundir con los comandos a través de Telegram
-                    if (consoleCommand == null || consoleCommand.trim().isEmpty())
+            try (BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in))) {
+                while (running) {
+                    String consoleCommand = buffer.readLine();
+                    if (consoleCommand == null || consoleCommand.trim().isEmpty()) {
                         continue;
+                    }
 
                     switch (consoleCommand) {
                         case "stop":
@@ -160,9 +171,9 @@ public final class ConsoleManager {
                         default:
                             System.out.println("Opción no válida.\n");
                     }
-                } catch (IOException | IllegalArgumentException ex) {
-                    logger.log(Level.SEVERE, "Error while reading commands", ex);
                 }
+            } catch (IOException | IllegalArgumentException ex) {
+                logger.log(Level.SEVERE, "Error while reading commands", ex);
             }
         }
     }

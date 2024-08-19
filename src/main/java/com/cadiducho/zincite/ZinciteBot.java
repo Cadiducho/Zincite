@@ -31,6 +31,11 @@ public class ZinciteBot {
     private final ConsoleManager consoleManager;
 
     /**
+     * The Zincite configuration
+     */
+    @Getter private final ZinciteConfig config;
+
+    /**
      * The telegram token
      */
     @Getter private final String token;
@@ -55,56 +60,26 @@ public class ZinciteBot {
 
     /**
      * Create a ZinciteBot
-     * @param token Telegram bot token
+     * @param config The Zincite configuration
      */
-    public ZinciteBot(String token) {
-        this(token, null, "1.0");
-    }
-
-    /**
-     * Create a ZinciteBot
-     * @param token Telegram bot token
-     * @param ownerId Telegram ID of the owner
-     */
-    public ZinciteBot(String token, Long ownerId) {
-        this(token, ownerId, "1.0");
-    }
-
-    /**
-     * Create a ZinciteBot
-     * @param token Telegram bot token
-     * @param ownerId Telegram owner's user id
-     * @param version Version of the bot
-     */
-    public ZinciteBot(String token, Long ownerId, String version) {
-        this(token, ownerId, version, "logs", "modules");
-    }
-
-    /**
-     * Create a ZinciteBot
-     * @param token Telegram bot token
-     * @param ownerId Telegram owner's user id
-     * @param version Version of the bot
-     * @param logsPath Path where logs are stored
-     * @param modulesPath Path where modules are stored
-     */
-    public ZinciteBot(String token, Long ownerId, String version, String logsPath, String modulesPath) {
+    public ZinciteBot(ZinciteConfig config) {
+        if (config == null) {
+            throw new IllegalArgumentException("Config cannot be null");
+        }
+        if (config.token == null) {
+            throw new IllegalArgumentException("Token cannot be null");
+        }
+        this.config = config;
         instance = this;
 
-        this.token = token;
-        this.ownerId = ownerId;
-        this.version = version;
+        this.token = config.token;
+        this.ownerId = config.ownerId;
+        this.version = config.version;
 
-        this.consoleManager = new ConsoleManager(instance);
-        this.consoleManager.startFile(logsPath + "/log-%D.txt");
-        if (token == null) {
-            log.warning("Token cannot be null");
-        }
-        if (version == null) {
-            log.warning("Version cannot be null");
-        }
+        this.consoleManager = new ConsoleManager(instance, config.enableFileLog);
+        this.consoleManager.startFile(config.logsPath + "/log-%D.txt");
 
-        this.moduleManager = new ModuleManager(new File(modulesPath));
+        this.moduleManager = new ModuleManager(new File(config.modulesPath));
         this.commandManager = new CommandManager(instance);
 
         this.telegramBot = new TelegramBot(token);
@@ -115,12 +90,12 @@ public class ZinciteBot {
      * This includes load modules and start polling Telegram Bot API
      */
     public void startServer() {
-        consoleManager.startConsole();
+        consoleManager.startConsole(config.enableConsoleReader, config.enableFileLog);
         log.info("Servidor arrancado");
 
         try {
             moduleManager.loadModules();
-        } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
+        } catch (Exception ex) {
             log.warning("Can't load modules!");
             log.warning(ex.getMessage());
         }
